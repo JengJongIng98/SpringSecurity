@@ -1,0 +1,41 @@
+시큐리티.txt
+
+스프링 시큐리티 : 서블릿의 필터, 인터셉터(스프링의 필터)를 사용한 처리방식
+				 (서블릿의 자원) (스프링의 자원-스프링 빈에 접근가능)
+				 
+	p607
+	Servlet Context[
+			{ 필터 } { 필터 } { 필터 } { 필터 }
+		Spring[
+			
+			{인터셉터} {인터셉터} {인터셉터}
+			SecurityContext[ ]
+			
+			Web ApplicationContext [ ]
+			(servlet-context.xml)
+			
+			Root Context[ ]
+			(root-context.xml
+		
+		]
+	]
+	
+	* 시큐리티 라이브러리 (web/core/config는 항상 동일버전)
+	- spring-security-web
+	<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-web -->
+	
+	- spring-security-core
+	<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-core -->
+	
+	- spring-security-config
+	<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-config -->
+	
+	- spring-security-taglibs
+	<!-- https://mvnrepository.com/artifact/org.springframework.security/spring-security-taglibs -->
+	
+	
+ p615
+	
+	인증 (Authentication)(Auth)(OAuth) : 자신을 증명하는 작업
+	인가(권한부여) (Authorization) : 남이 나에게 부여해줌
+	
