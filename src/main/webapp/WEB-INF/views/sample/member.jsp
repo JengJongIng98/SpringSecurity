@@ -11,5 +11,7 @@
 	
 	<h2> 특정사용자(로그인한 사용자)만 접근가능 </h2>
 	
+	<input type="button" value="로그아웃" onclick=" location.href='/customLogout'; ">
+	
 </body>
 </html>

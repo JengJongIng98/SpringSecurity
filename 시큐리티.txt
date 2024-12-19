@@ -39,3 +39,72 @@
 	인증 (Authentication)(Auth)(OAuth) : 자신을 증명하는 작업
 	인가(권한부여) (Authorization) : 남이 나에게 부여해줌
 	
+	[일반 프로젝트]
+	회원의 아이디 (userid)
+	회원의 이름 (username)
+	
+	User (사용자)
+	
+	[시큐리티 프로젝트]
+	회원의 아이디 (userid) => (username)
+	회원의 이름 (username) => (name)
+	
+	User (인증정보, 권한을 가지는 객체)
+	
+	
+	* CSRF(Cross-Site Request Forgery) 공격
+	  => 사이트간 위조 방지를 위해서 토큰값을 가져다가 사용
+	  
+	  서버에서 생성된 임의의 토큰값을 비교
+	   <img src="www.itwillbs.co.kr/update?id=admin&grade=admin">
+	   
+	   
+	https://github.com/spring-projects/spring-security/blob/main/core/src/main/java/org/springframework/security/provisioning/JdbcUserDetailsManager.java
+
+	public static final String DEF_CREATE_USER_SQL = "insert into users (username, password, enabled) values (?,?,?)";
+	
+	CREATE TABLE `springdb`.`users` (
+	  `username` VARCHAR(50) NOT NULL,
+	  `password` VARCHAR(50) NOT NULL,
+	  `enabled` INT NULL DEFAULT '1',
+	  PRIMARY KEY (`username`));
+	
+	
+	public static final String DEF_INSERT_AUTHORITY_SQL = "insert into authorities (username, authority) values (?,?)";
+	
+	CREATE TABLE `springdb`.`authorities` (
+	  `username` VARCHAR(50) NOT NULL,
+	  `authority` VARCHAR(50) NOT NULL,
+	  INDEX `fk_authorities_users_idx` (`username` ASC) VISIBLE,
+	  CONSTRAINT `fk_authorities_users`
+      FOREIGN KEY (`username`)
+      REFERENCES `springdb`.`users` (`username`)
+      ON DELETE NO ACTION
+      ON UPDATE NO ACTION);
+	
+	insert into users (username, password)
+	values ('user00','1234');
+	insert into users (username, password)
+	values ('manager00','1234');
+	insert into users (username, password)
+	values ('admin00','1234');
+	
+	insert into authorities
+	values('user00', 'ROLE_USER');
+	insert into authorities
+	values('manager00', 'ROLE_MANAGER');
+	insert into authorities
+	values('admin00', 'ROLE_MANAGER');
+	insert into authorities
+	values('admin00', 'ROLE_ADMIN');
+	
+	CREATE TABLE `springdb`.`tbl_member_auth` (
+  `userid` VARCHAR(50) NOT NULL,
+  `auth` VARCHAR(50) NOT NULL,
+  INDEX `fk_member_auth_idx` (`userid` ASC) VISIBLE,
+  CONSTRAINT `fk_member_auth`
+    FOREIGN KEY (`userid`)
+    REFERENCES `springdb`.`tbl_member` (`userid`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION);
+	
